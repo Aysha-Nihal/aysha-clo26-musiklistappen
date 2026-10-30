@@ -8,6 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="musiklist.db" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="musiklist.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <!-- ADO.NET-leverantören för SQLite -->
     <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.13" />
     <!-- Läser appsettings.json (samma som i hero_databas) -->

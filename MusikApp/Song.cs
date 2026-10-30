@@ -1,11 +1,19 @@
 namespace MusikApp;
 
-// Din data-klass: ett Song-objekt = en rad i din låt-tabell.
+// Your data class: a Song object = a row in your song table.
 //
-// TODO: lägg till en egenskap per kolumn du vill visa i appen,
-// t.ex. Id, Titel och Längd. Namn och typer ska passa din databas.
+// TODO: add one property per column you want to display in the app,
+// e.g. Id, Title, and Duration. Names and types should match your database.
 //
-// Behöver du fler klasser (Album, Artist) för din app? Skapa dem i egna filer.
+// Do you need more classes (Album, Artist) for your app? Create them in separate files.
 public class Song
 {
+    public int Id { get; set; }
+
+    public string Title { get; set; } = "";
+
+    public int DurationSeconds { get; set; }
+
+    public int AlbumId { get; set; }
+
 }

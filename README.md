@@ -22,7 +22,7 @@ Make sure you run the commands from the repository folder as shown above.
 
 ## This is what the main menu looks like
 
-![Main menu](Main%20menu-image.png)``
+![Main menu](Main%20menu-image.png)
 
 ---
 

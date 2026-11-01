@@ -31,7 +31,7 @@ You are using **SQLite** and your database from the discography submission. You 
 
 | File | What it is |
 |-----|-----------|
-| `MusikApp/DbHandler.cs` | A **skelett**: the methods and comments are there, you write the code yourself |
+| `MusikApp/DbHandler.cs` | A **skelton**: the methods and comments are there, you write the code yourself |
 | `MusikApp/Song.cs` | Your data class (empty, you add the properties) |
 | `MusikApp/Program.cs` | 	This is where you build the menu. It already loads it `appsettings.json` for you |
 | `MusikApp/appsettings.json` | Settings: the path to your database (`Data Source=musik.db`) |
@@ -46,7 +46,7 @@ You are using **SQLite** and your database from the discography submission. You 
 
 ### The app
 
-- Launches and displays a **huvudmeny** with options numbered 1–N
+- Launches and displays a **main menu** with options numbered 1–N
 - The user navigates by typing a number and pressing Enter.
 - The app exits gracefully when the user selects "Exit"
 
@@ -95,25 +95,24 @@ ORDER BY Album.Namn, Låtar.Titel;
 ```
 
 **B) Subquery**
-Appen använder en underfråga — t.ex. för att visa låtar som är längre än medellängden:
-
+The app uses a subquery — e.g. to display songs that are longer than the average length:
 ```sql
 SELECT Titel, Längd
 FROM Låtar
 WHERE Längd > (SELECT AVG(Längd) FROM Låtar);
 ```
 
-### Del 2 — Reflektion i README
+### Del 2 — Reflection in README
 
-Lägg till ett avsnitt **"Mina designval"** i din `README.md` där du svarar på:
+Add a **"My Design Choices"** section to yours 'README.md' where you answer:
 
-1. Hur designade du din databas? Varför valde du just den strukturen?
-2. Vilket SQL-krav valde du (JOIN eller subquery) och varför passade det din app?
-3. Vad skulle du gjort annorlunda om du byggde om den från scratch?
+1. How did you design your database? Why did you choose that particular structure?
+2. Which SQL requirement did you choose (JOIN or subquery) and why did it suit your app?
+3. What would you do differently if you were rebuilding it from scratch?
 
 ---
 
-## Kodexempel — så kopplar du till SQLite
+## Code example — how to connect to SQLite
 
 ```csharp
 // ADO.NET mot SQLite. NuGet: Microsoft.Data.Sqlite (redan installerat i projektet)
@@ -132,7 +131,7 @@ while (reader.Read())
 }
 ```
 
-Använd alltid parameteriserade queries när du tar emot input:
+Always use parameterized queries when receiving input:
 
 ```csharp
 command.CommandText = "INSERT INTO Låtar (Titel, Längd) VALUES (@titel, @langd)";
@@ -145,13 +144,13 @@ command.ExecuteNonQuery();
 
 ## Tips
 
-- Börja med att få menyn att fungera — utan databas. Skriv ut "Här kommer en lista senare" tills anslutningen är klar.
-- Lägg din `.db`-fil i mappen `MusikApp/` och döp den till `musik.db`. Heter din fil något annat ändrar du i `appsettings.json`, inte i koden.
-- `appsettings.json` följer med i mallen så att appen fungerar direkt, och den innehåller här bara databasens filnamn, inga hemligheter. Normalt checkar man *inte* in den (se hero_databas, labb 1). Lägger du någonsin ett lösenord i en sådan fil: kör `git rm --cached MusikApp/appsettings.json` först, så att git slutar följa den. Det som ska finnas i repot är `appsettings.example.json`.
-- En metod = en sak. `VisaAllaLåtar()`, `LäggTillLåt()`, `TaBortLåt()` — håll dem korta.
-- Du behöver inte skriva om eller förbättra SQL-schemat. Det du har fungerar.
-- Fastnar du: börja med `GetAllSongs()` i `DbHandler.cs`. När den fungerar är resten samma mönster.
+- Start by getting the menu working — without a database. Print "Here comes a list late" until the connection is complete.
+- Put your '.db' file in the folder 'MusikApp/'and rename it to 'musik.db'. If your file is named something else, change it in 'appsettings.json', not in the code.
+- 'appsettings.json' is included in the template so that the app works right away, and it only contains the database file name here, no secrets. Normally you don't check it in (see hero_database, lab 1). If you ever put a password in such a file: run it 'git rm --cached MusikApp/appsettings.json' first, so that git stops following it. What should be in the repot is 'appsettings.example.json'.
+- One method = one thing. 'VisaAllaLåtar()', 'LäggTillLåt()', 'TaBortLåt()' — keep them short.
+- You don't need to rewrite or improve the SQL schema. What you have works.
+- If you get stuck: start with 'GetAllSongs()'. 'DbHandler.cs' When it works, the rest is the same pattern.
 
 ---
 
-*Du har redan gjort det svåra. Nu är det bara att paketera det i C#.*
+*You've already done the hard part. Now all you have to do is package it in C#..*

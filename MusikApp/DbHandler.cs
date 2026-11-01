@@ -156,7 +156,7 @@ public class DbHandler
 
         // ExecuteNonQuery() executes the INSERT command. It is used for commands that change data rather than return rows.
         int rowsAffected = command.ExecuteNonQuery();
-        Console.WriteLine($"Rows inserted: {rowsAffected}");
+        Console.WriteLine("Song added successfully!");
     }
 
     ///  Removes a song. Returns true if a row was actually removed.
@@ -201,25 +201,71 @@ public class DbHandler
         }
     }
 
-    // ---------------------------------------------------------------
-    // VG-nivå: you need at least ONE of these two (and the reflection in the README)
-    // ---------------------------------------------------------------
 
-    /// <summary>(VG, alternativ A) Songs along with the album name. Requires a JOIN. </summary>
+    /// Songs along with the album name. Requires a JOIN
     public List<(string SongTitle, string AlbumName)> GetSongsWithAlbum()
     {
-        // TODO: SELECT Songs.Titel, Album.Name FROM Songs JOIN Album ON ... ORDER BY ...
-        throw new NotImplementedException();
+        List<(string SongTitle, string AlbumName)> results = new List<(string SongTitle, string AlbumName)>();
+
+        using var connection = new SqliteConnection(_connectionString);
+        connection.Open();
+
+        string sql = @"
+        SELECT songs.title, albums.title
+        FROM songs
+        INNER JOIN albums
+        ON songs.album_id = albums.id
+        ORDER BY albums.title, songs.title";
+
+        using var command = new SqliteCommand(sql, connection);
+        using var reader = command.ExecuteReader();
+
+        while (reader.Read())
+        {
+            string songTitle = reader.GetString(0);
+            string albumName = reader.GetString(1);
+
+            results.Add((songTitle, albumName));
+        }
+
+        return results;
     }
 
-    /// <summary>(VG, alternativ B) Songs that are longer than the average length. Requires a subquery. </summary>
+    ///  Songs that are longer than the average length. Requires a subquery
     public List<Song> GetSongsLongerThanAverage()
     {
-        // TODO: SELECT ... WHERE Length > (SELECT AVG(Length) FROM Songs).
-        throw new NotImplementedException();
+        List<Song> songs = new List<Song>();
+
+        using var connection = new SqliteConnection(_connectionString);
+        connection.Open();
+
+        string sql = @"
+        SELECT id, title, duration_seconds, album_id
+        FROM songs
+        WHERE duration_seconds > (
+            SELECT AVG(duration_seconds)
+            FROM songs
+        )
+        ORDER BY duration_seconds DESC";
+
+        using var command = new SqliteCommand(sql, connection);
+        using var reader = command.ExecuteReader();
+
+        while (reader.Read())
+        {
+            Song song = new Song();
+
+            song.Id = reader.GetInt32(0);
+            song.Title = reader.GetString(1);
+            song.DurationSeconds = reader.GetInt32(2);
+            song.AlbumId = reader.GetInt32(3);
+
+            songs.Add(song);
+        }
+
+        return songs;
     }
 }
-
 
 
 //  DbHandler class contains methods for working with the database, such as:

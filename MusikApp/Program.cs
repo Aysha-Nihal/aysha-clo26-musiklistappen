@@ -24,9 +24,10 @@ var connectionString = config.GetConnectionString("Default")
 // Creates a DbHandler object and passes the database connection string to it.
 // The DbHandler object will be used to handle database operations, such as getting, adding and deleting songs.
 // ie  Creates the object that handles database operations.
-Console.WriteLine($"Working directory: {Directory.GetCurrentDirectory()}");
+//Console.WriteLine($"Working directory: {Directory.GetCurrentDirectory()}");
+// Application working directory: C:\Users\nihal\source\repos\aysha-clo26-musiklistappen\MusikApp\bin\Debug\net10.0\musiklist.db
 var dbHandler = new DbHandler(connectionString);
-Console.WriteLine("Database handler created.");
+
 
 while (true)
 {
@@ -36,7 +37,9 @@ while (true)
     Console.WriteLine("1. Show all songs");
     Console.WriteLine("2. Add a song");
     Console.WriteLine("3. Delete a song");
-    Console.WriteLine("4. Exit");
+    Console.WriteLine("4. Show songs with album names");
+    Console.WriteLine("5. Show songs longer than average");
+    Console.WriteLine("6. Exit");
     Console.Write("Choose: ");
     string? choice = Console.ReadLine();
     // Reads the user's selection and stores it in choice
@@ -114,15 +117,38 @@ while (true)
             break;
 
         case "4":
+            var songsWithAlbums = dbHandler.GetSongsWithAlbum();
+
+            Console.WriteLine("\nSongs with album names:");
+
+            foreach (var item in songsWithAlbums)
+            {
+                Console.WriteLine($"{item.SongTitle} - {item.AlbumName}");
+            }
+            break;
+
+        case "5":
+            var longSongs = dbHandler.GetSongsLongerThanAverage();
+
+            Console.WriteLine("\nSongs longer than average:");
+
+            foreach (var song in longSongs)
+            {
+                Console.WriteLine($"{song.Title} - {song.DurationSeconds} seconds");
+            }
+
+            break;
+
+        case "6":
             Console.WriteLine("Goodbye!");
             return;
 
         default:
-            Console.WriteLine("Invalid choice. Please choose 1-4.");
+            Console.WriteLine("Invalid choice. Please choose 1-6.");
             break;
     }
 
 }
 
 
-// Application working directory: C:\Users\nihal\source\repos\aysha-clo26-musiklistappen\MusikApp\bin\Debug\net10.0\musiklist.db
+

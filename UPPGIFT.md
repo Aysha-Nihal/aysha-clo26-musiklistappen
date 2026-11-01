@@ -3,7 +3,7 @@
 🟢
 
 **Kurs:** CLO26 — Cloud Developer
-**Deadline:** Måndag
+**Deadline:** Monday
 
 ---
 

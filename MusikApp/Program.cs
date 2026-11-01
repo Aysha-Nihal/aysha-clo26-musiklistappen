@@ -48,9 +48,10 @@ while (true)
     // Console.ReadLine() reads what the user types.
 
 
-    // // switch checks which option the user selected.
+    // switch checks which option the user selected.
     switch (choice)
     {
+        // Displays the song ID, title and duration.
         case "1":
             // Gets all songs from the database using DbHandler.
             List<Song> songs = dbHandler.GetAllSongs();
@@ -63,23 +64,27 @@ while (true)
             }
             break;
 
+        // Option 2: Add a new song to the database.
         case "2":
             Song newSong = new Song();
 
             Console.Write("Enter song title: ");
             newSong.Title = Console.ReadLine() ?? "";
 
+            // Asks the user to enter the song duration in seconds.
             Console.Write("Enter duration in seconds: ");
             newSong.DurationSeconds = Convert.ToInt32(Console.ReadLine());
 
             Console.Write("Enter album ID: ");
             newSong.AlbumId = Convert.ToInt32(Console.ReadLine());
 
+            // Calls AddSong() in DbHandler to save the new song in the database.
             dbHandler.AddSong(newSong);
 
             Console.WriteLine("Song added successfully!");
             break;
 
+        // Option 3: Show all songs and let the user choose which song to delete.
         case "3":
             // Display all songs.
             var allSongs = dbHandler.GetAllSongs();
@@ -116,6 +121,8 @@ while (true)
             }
             break;
 
+        // Option 4: Show songs together with their album names.
+        // Calls GetSongsWithAlbum() in DbHandler to retrieve songs and their album names
         case "4":
             var songsWithAlbums = dbHandler.GetSongsWithAlbum();
 
@@ -127,6 +134,8 @@ while (true)
             }
             break;
 
+        // Option 5: Show only songs that are longer than the average duration.
+        // Calls GetSongsLongerThanAverage() in DbHandler to retrieve those songs.
         case "5":
             var longSongs = dbHandler.GetSongsLongerThanAverage();
 
@@ -139,10 +148,12 @@ while (true)
 
             break;
 
+        // Option 6: Exit the application.
         case "6":
             Console.WriteLine("Goodbye!");
             return;
 
+        // Handles input that does not match any menu option.
         default:
             Console.WriteLine("Invalid choice. Please choose 1-6.");
             break;

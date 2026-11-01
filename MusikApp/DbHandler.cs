@@ -17,24 +17,12 @@ public class DbHandler
 
     public DbHandler(string connectionString)
     {
-            // TODO: store the connectionString in a field that the methods below can use.
             // Store connection string in a private field
             _connectionString = connectionString;
         }
 
         // Private field to store connection string
         private string _connectionString;
-
-    // ---------------------------------------------------------------
-    // G-nivå: you need at least three of the five here (choose which ones yourself)
-    // ---------------------------------------------------------------
-
-    /// <summary> </summary>
-    //public List<Song> GetAllSongs()
-    // TODO: SELECT from your song table using ORDER BY.
-    // TODO: loop using reader.Read() and create a Song object from each row.
-    // Tips: reader.GetInt32(0), reader.GetString(1) ... or reader["Titel"].
-
 
 
     //  Retrieves all songs, sorted by title.
@@ -267,6 +255,8 @@ public class DbHandler
     }
 }
 
+// Loop using reader.Read() and create a Song object from each row.
+// reader.GetInt32(0), reader.GetString(1) ... or reader["Titel"]
 
 //  DbHandler class contains methods for working with the database, such as:
 //  - GetAllSongs()
@@ -274,6 +264,8 @@ public class DbHandler
 //  - SearchSongs()
 //  - AddSong()
 //  - DeleteSong()
+// - GetSongsWithAlbum()
+// - GetSongsLongerThanAverage()
 
 //  The two execution methods
 //  - ExecuteReader()    : Used when we want to retrieve data from the database
